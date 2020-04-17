@@ -1,0 +1,8 @@
+# Blockade
+
+The idea of Blockade is to update the hosts on a monthly bases using the
+build-in systemd timer.
+
+Run `make package` to build the deb package.
+
+
