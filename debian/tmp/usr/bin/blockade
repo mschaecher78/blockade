@@ -1,11 +1,5 @@
 #!/bin/bash
 
-set -e
-
-# Create the main script for Blockade.
-cat <<EOF > debian/tmp/usr/bin/blockade
-#!/bin/bash
-
 # Blockade; a program that updates the hosts file automaticaly.
 # Copyright (C) 2020  Michael L. Schaecher
 
@@ -26,13 +20,13 @@ cat <<EOF > debian/tmp/usr/bin/blockade
 set -e
 
 # Since the link is long it makes sense to shorten it to veriable.
-download_link="${LINK}"
+download_link="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts"
 
 new_hosts () {
 
 # Recreate the header for the hosts file
 cat <<EOF > /etc/hosts
-# Blackade generated hosts on \`date -R\` on \`hostname\`
+# Blackade generated hosts on `date -R` on `hostname`
 #
 # This hosts file is updated weekly and is sourced from Steven Black hosts.
 # github page.If you come accross any links that you feel should be
@@ -64,10 +58,6 @@ ff02::3 ip6-allhosts
 # ==================================================
 EOF
 
-echo "EOF" >> debian/tmp/usr/bin/blockade
-
-cat <<EOF >> debian/tmp/usr/bin/blockade
-
 }
 
 export -f new_hosts
@@ -82,18 +72,18 @@ Useage = blockade [option]
 GPL v2 copyright (2020) Michael L. Schaecher
 "
 
-case \$1 in
+case $1 in
 	update-hosts)
 
 		# Only run if the user is root.
-		if [ "\${EUID}" -ne 0 ] ; then
+		if [ "${EUID}" -ne 0 ] ; then
 			echo "Error: must be root user!"
-		elif [ "\${EUID}" -ne 1 ] ; then
-			echo "downloading \${download_link}" && sleep 0.5
+		elif [ "${EUID}" -ne 1 ] ; then
+			echo "downloading ${download_link}" && sleep 0.5
 
 			# Download and copy only what is maked by website links,
 			# egnoring the header of the file.
-			if ! wget -O - -cq \${download_link} |
+			if ! wget -O - -cq ${download_link} |
 			   awk 'NR < 40{next}1' | grep '0.0.0.0' >> /tmp/hosts ; then
 				echo "Error: unable to update hosts" && exit 1
 			fi
@@ -117,12 +107,11 @@ case \$1 in
 		fi
 	;;
 	help)
-		echo "\${HELP}" && exit 0
+		echo "${HELP}" && exit 0
 	;;
 	*)
-		echo "Error: Unknow option!" && echo "\${HELP}" exit 1
+		echo "Error: Unknow option!" &&exit 1
 	;;
 
 esac
 
-EOF
