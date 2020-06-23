@@ -45,7 +45,7 @@ else
 	if ! cp -vf scr/postinst ${DEBIAN}/postinst ; then
 		echo "Missing: installer" && exit 1
 	else
-		chmod a+x ${DEBIAN}/postinst
+		chmod a+x ${DEBIAN}/postinst ${APP}/blockade
 	fi
 
 fi

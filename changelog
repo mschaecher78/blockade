@@ -1,3 +1,10 @@
+blockade-1.20.6-24.10 (1.20.6-24.10) ubuntu; urgency=medium
+
+  * Version bump.
+  * Fix premission for /usr/bin/blockade (was not executable)
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Tue, 23 Jun 2020 12:05:17 -0600
+
 blockade-1.20.6-23.04 (1.20.6-23.04) ubuntu; urgency=medium
 
   * Rewritten enter blockade script.
