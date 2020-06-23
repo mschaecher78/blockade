@@ -1,7 +1,7 @@
 # Define how to construct the Blockade bash script.
 RELEASE = 1
 LEVEL = 20
-SUBLEVEL = 6-23.04
+SUBLEVEL = 6-24.10
 
 # Set version code and name.
 export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
