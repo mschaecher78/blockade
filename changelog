@@ -1,3 +1,9 @@
+blockade-1.20.6-23.04 (1.20.6-23.04) ubuntu; urgency=medium
+
+  * Rewritten enter blockade script.
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Tue, 23 Jun 2020 11:50:20 -0600
+
 blockade-1.20.6-22.1 (1.20.6-22.1) ubuntu; urgency=medium
 
   * Allow for user to set systemctl timer interval.
