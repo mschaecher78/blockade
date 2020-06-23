@@ -3,7 +3,7 @@ Description=Update your hosts file without having to worry
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/blockade update-hosts
+ExecStart=/usr/bin/blockade --update
 
 [Install]
 WantedBy=multi-user.target

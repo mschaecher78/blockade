@@ -1,0 +1,13 @@
+Source: blockade-1.20.6-23.04
+Section: networking
+Priority: optional
+Maintainer: Michael L. Schaecher <mschaecher78@gmail.com>
+Build-Depends: cp, gzip, wget, dpkg
+Homepage: https://www.github.com/mschaecher78/blockade/
+
+Package:blockade
+Architecture: all
+Depends: wget, systemd
+Description: Update hosts
+ Using Steven Black's' github hosts project. This enables
+ the hosts to be used to manage security while surffing the web.
