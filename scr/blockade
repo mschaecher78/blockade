@@ -94,6 +94,8 @@ if ! which systemctl >/dev/null 2>&1 ; then
 	systemctl disable blockade-hosts-update.timer
 	echo "Error: failed to restart service!"
 	exit 1
+else
+	echo "Disabling: blockade-hosts-update.timer"
 fi
 
 # Rewrite the systemctl scripts.
@@ -128,6 +130,15 @@ if ! which systemctl >/dev/null 2>&1 ; then
 	systemctl enable blockade-hosts-update.timer
 	echo "Error: failed to restart service!"
 	exit 1
+else
+	echo "Enabling: blockade-hosts-update.timer"
+
+	# This prevents the warning about The unit configuration file or drop-ins
+	# being changed.
+	if ! systemctl daemon-reload ; then
+		echo "Error: unable to reload systemd daemons!"
+	else
+		echo "Reload systemd deamons."
 fi
 
 }

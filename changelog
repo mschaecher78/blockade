@@ -1,3 +1,14 @@
+blockade-1.20.6-24.11 (1.20.6-24.11) ubuntu; urgency=medium
+
+  * Fixed: No such file or directory when resetting blockade update service.
+  * Prevent the warning about The unit configuration chamges.
+    - Systemd will throw a warning about service configation changes.
+      Telling the user the  Run 'systemctl daemon-reload' so that the
+      news changes can take effect. Otherwise, the previous configation
+      well be used. 
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Wed, 24 Jun 2020 00:07:16 -0600
+
 blockade-1.20.6-24.10 (1.20.6-24.10) ubuntu; urgency=medium
 
   * Version bump.
