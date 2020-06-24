@@ -97,7 +97,7 @@ if ! which systemctl >/dev/null 2>&1 ; then
 fi
 
 # Rewrite the systemctl scripts.
-cat <<EOF > lib/systemd/system/blockade-hosts-update.service
+cat <<EOF > /lib/systemd/system/blockade-hosts-update.service
 [Unit]
 Description=Update your hosts file without having to worry
 
@@ -109,7 +109,7 @@ ExecStart=/usr/bin/blockade --update
 WantedBy=multi-user.target
 EOF
 
-cat <<EOF > lib/systemd/system/blockade-hosts-update.timer
+cat <<EOF > /lib/systemd/system/blockade-hosts-update.timer
 [Unit]
 Description=Update your hosts file without having to worry
 
