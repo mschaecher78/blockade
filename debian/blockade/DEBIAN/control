@@ -1,0 +1,13 @@
+Package: blockade
+Source: blockade-1.20.6-24.11
+Version: 1.20.6-24.11
+Architecture: all
+Maintainer: Michael L. Schaecher <mschaecher78@gmail.com>
+Installed-Size: 44
+Depends: wget, systemd
+Section: networking
+Priority: optional
+Homepage: https://www.github.com/mschaecher78/blockade/
+Description: Update hosts
+ Using Steven Black's' github hosts project. This enables
+ the hosts to be used to manage security while surffing the web.

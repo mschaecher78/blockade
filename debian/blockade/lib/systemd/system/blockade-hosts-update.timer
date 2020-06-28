@@ -1,0 +1,11 @@
+[Unit]
+Description=Update your hosts file without having to worry
+
+[Timer]
+Unit=blockade-hosts-update.service
+OnCalendar=monthly
+RandomizedDelaySec=15m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
