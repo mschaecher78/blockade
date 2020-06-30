@@ -1,3 +1,9 @@
+blockade-1.20.27.36 (1.20.27.36) ubuntu; urgency=medium
+
+  * Better changelog management.
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Tue, 30 Jun 2020 10:26:51 -0600
+
 blockade-1.20.6-24.11 (1.20.6-24.11) ubuntu; urgency=medium
 
   * Version bump.

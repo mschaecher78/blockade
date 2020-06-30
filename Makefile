@@ -1,7 +1,7 @@
 # Define how to construct the Blockade bash script.
 RELEASE = 1
 LEVEL = 20
-SUBLEVEL = 6-24.11
+SUBLEVEL = 27.36
 
 # Set version code and name.
 export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
@@ -22,3 +22,5 @@ package:
 
 clean:
 	rm -Rf debian
+
+install:

@@ -12,6 +12,11 @@ COMMIT=$(cat .git/COMMIT_EDITMSG)
 
 ROOT=$(pwd)
 
+# Make sure that the commit message is not dupicated in then
+# changelog.
+if grep "* ${COMMIT}" changelog > /dev/null ; then
+	cp changelog debian/changelog
+else
 cat <<EOF > debian/changelog
 ${NAME_VERSION} (${VERSION}) ubuntu; urgency=medium
 
@@ -21,6 +26,7 @@ ${NAME_VERSION} (${VERSION}) ubuntu; urgency=medium
 
 ${CHANGELOG}
 EOF
+fi
 
 cp -f debian/changelog changelog
 
