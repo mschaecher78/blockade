@@ -1,3 +1,10 @@
+blockade-2.20.7 (2.20.7) ubuntu; urgency=medium
+
+  * Add option to edit /etc/hosts and clean up.
+  * Version bump to 2.*
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Sat, 04 Jul 2020 01:38:56 -0600
+
 blockade-1.20.27.36 (1.20.27.36) ubuntu; urgency=medium
 
   * Better changelog management.

@@ -33,7 +33,7 @@ cp -f debian/changelog changelog
 
 # Aviod using cp to copy the main script because the version needs
 # to be set.
-sed "247iVERSION=\"${VERSION}\"" scr/blockade > ${TMP}/${APP}/blockade
+sed "246iVERSION=\"${VERSION}\"" scr/blockade > ${TMP}/${APP}/blockade
 
 if ! cp -vf scr/blockade-hosts-update.* ${TMP}/${SERVICE}/ ; then
 	echo "Error: missing" && exit 1
