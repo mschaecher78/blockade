@@ -1,6 +1,7 @@
 blockade-1.20.27.36 (1.20.27.36) ubuntu; urgency=medium
 
   * Better changelog management.
+  * Show info based on systemctl status instead of unneeded files.
 
  -- Michael L. Schaecher <mschaecher78@gmail.com>  Tue, 30 Jun 2020 10:26:51 -0600
 
@@ -17,7 +18,7 @@ blockade-1.20.6-24.11 (1.20.6-24.11) ubuntu; urgency=medium
     - Systemd will throw a warning about service configation changes.
       Telling the user the  Run 'systemctl daemon-reload' so that the
       news changes can take effect. Otherwise, the previous configation
-      well be used. 
+      well be used.
 
  -- Michael L. Schaecher <mschaecher78@gmail.com>  Wed, 24 Jun 2020 00:07:16 -0600
 

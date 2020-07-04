@@ -1,0 +1,16 @@
+1;Unified;http://sbc.io/hosts/hosts
+2;Fakenews;http://sbc.io/hosts/alternates/fakenews/hosts
+3;Gambling;http://sbc.io/hosts/alternates/gambling/hosts
+4;Porn;http://sbc.io/hosts/alternates/porn/hosts
+5;Social;http://sbc.io/hosts/alternates/social/hosts
+6;Fakenews n' Gambling;http://sbc.io/hosts/alternates/fakenews-gambling/hosts
+7;Fakenews n' Porn;http://sbc.io/hosts/alternates/fakenews-porn/hosts
+8;Fakenews n' Social;http://sbc.io/hosts/alternates/fakenews-social/hosts
+9;Gambling n' Porn;http://sbc.io/hosts/alternates/gambling-porn/hosts
+10;Gambling n' Sorcial;http://sbc.io/hosts/alternates/gambling-social/hosts
+11;Porn n' Social;http://sbc.io/hosts/alternates/porn-social/hosts
+12;Fakenews, Gambling n' Porn ;http://sbc.io/hosts/alternates/fakenews-gambling-porn/hosts
+13;Fakenews, Gambling n' Social;http://sbc.io/hosts/alternates/fakenews-gambling-social/hosts
+14;Fakenews, Porn n' Social;http://sbc.io/hosts/alternates/fakenews-porn-social/hosts
+15;Gambling, Porn n' Social;http://sbc.io/hosts/alternates/gambling-porn-social/hosts
+16;Fakenews, Gambling, Porn n' Social;http://sbc.io/hosts/alternates/fakenews-gambling-porn-social/hosts
