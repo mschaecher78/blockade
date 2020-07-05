@@ -47,35 +47,25 @@ Display blockade version.
 .PP
 .SH SET INTERVAL
 By defaul the hosts file is updated monthly, but this can be changed manually by running the command/'s below.
-.SH SIGNING
 .PP
-Signing either modules, or kernel \fBvmlinux-(version)\fR is straight forward. This can be done with a compiled kernel
-or installed one. \fBWARNING\fR: The kernel and modules must be signed with the same key type, otherwise you will
-see a warning about a none matching key. Signing a kernel binary also requires that the \fBinitram image\fR be rebuilt.
-See the man page for \fBinitramfs\fR for more details on how this is done.
+\fB	blockade --interval=[daily][weekly][monthly][yearly][year-month-day hour:minute:second]
 .PP
-blockade can also sign a single kernel module, this is useful for modules built outside of the main installed/compiled
-kernel. It is possible to sign efi binary images, but this is discouraged.
+To set a specific time use 24hr UTC. Example \fB2020-07-04 00:00:00\fR = update /etc/host on July 04, 2020 @ midnight.
+An "\fB*\fR" can be used to as a wildcard like so: \fB*-*-04 00:00:00\fR will cause /etc/hosts to be updated once a month
+on the fourth @ midnight.
+.SH HOSTS TYPE
 .PP
-Signing binary kernel vmlinux image.
+There are a number of hosts file configurations made avialible by Steven Black. Visit his github page and feed the project
+@ \fBhttps://github.com/StevenBlack/hosts\fR. While the default is the \fBunified\fR this can eazily be changed by running
+\fB--type\fR.
 .PP
-\fB	blockade --image --path=/path/to/vmlinux-(version)\fR
-.PP
-Signing single module build outside of main installed kernel.
-.PP
-\fB	blockade --module --path=/path/to/(module binary)\fR
-.PP
-Signing all modules.
-.PP
-\fB	blockade --modules-all --path/path/to/module/kernel-(version)/directory
-.PP
-Signing with a different key if key was not generated with blockade and one is alread register to shim.
-.PP
-\fB	blockade --(image, module, modules-all) --key-private=/path/to/(private key) --key-public=/path/to/(public key)
-.PP
+Default = \fBUnified\fR
 .SH ALSO SEE
 .PP
-\fBsbsign\fR,
-\fBkmodsign\fR,
-\fBopenssl\fR and
-\fBmokutil\fR.
+\fBhostname(1)\fR,
+\fBresolver(3)\fR,
+\fBhost.conf(5)\fR,
+\fBresolv.conf(5)\fR,
+\fBhostname(7)\fR,
+\fBnamed(8)\fR,
+\fBresolv.conf(5)\fR.

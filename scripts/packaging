@@ -40,6 +40,11 @@ if ! cp -vf scr/blockade-hosts-update.* ${TMP}/${SERVICE}/ ; then
 else
 	cp -vf scr/doc/* ${TMP}/${BLOCKADE}/
 	cp -vf scr/blockade.conf ${TMP}/${LIB}/blockade.conf
+	cp -vf man/blockade.1 ${TMP}/${MAN}/blockade.1
+
+	if ! gzip -9 -vf ${TMP}/${MAN}/blockade.1 ; then
+		echo "Error" && exit 1
+	fi
 
 	# Copy and conpress changelog.
 	if ! cp -vf debian/changelog copyright ${TMP}/${DOC}/ ; then
@@ -53,9 +58,7 @@ else
 	if ! cp -vf scr/postinst ${TMP}/${DEBIAN}/postinst ; then
 		echo "Missing: installer" && exit 1
 	else
-		chmod -R a+rX "${TMP}"
-		chmod 0755 ${TMP}/${DEBIAN}/postinst ${TMP}/${APP}/blockade \
-			${TMP}/${LIB}/blockade.conf
+		chmod 0755 ${TMP}/${DEBIAN}/postinst
 	fi
 
 fi

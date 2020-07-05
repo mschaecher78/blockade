@@ -40,17 +40,7 @@ export NAME="Unified"
 export INTERVAL="monthly"
 EOF
 
-source ${CONFIG}
-
-echo "
-blockade - version ${VERSION}
-
-Host:   /etc/hosts
-Type:   ${NAME}
-Link:	${LINK}
-Status: ${STATUS}
-Update: ${LAST}
-"
+blockade --info
 exit 1
 
 }
@@ -58,13 +48,13 @@ exit 1
 function set_interval () {
 
 if sed "s/export INTERVAL=\"${INTERVAL}\"/export INTERVAL=\"${WHEN}\"/g" \
-scr/doc/blockade.conf > scr/doc/blockade.conf.new ; then
+${CONFIG} > /tmp/blockade.conf.tmp ; then
 
-	echo "Update On: ${DATE}"
-	mv -f scr/doc/blockade.conf.new scr/doc/blockade.conf
+	echo "setting update to ${WHEN}"
+	mv -f /tmp/blockade.conf.tmp ${CONFIG}
 	# Since blockade's configuration was rewritten the file's premissions
 	# need to be fixed.
-	chmod 0755 scr/doc/blockade.conf
+	chmod 0755 ${CONFIG}
 
 	# Disable the timer service to prevent error.
 	if ! which systemctl >/dev/null 2>&1 ; then
@@ -79,19 +69,6 @@ else
 	echo "Error: unable to update interval!"
 	exit 1
 fi
-
-# Rewrite the systemctl scripts.
-cat <<EOF > /lib/systemd/system/blockade-hosts-update.service
-[Unit]
-Description=Update your hosts file without having to worry
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/blockade --update
-
-[Install]
-WantedBy=multi-user.target
-EOF
 
 cat <<EOF > /lib/systemd/system/blockade-hosts-update.timer
 [Unit]
@@ -246,16 +223,15 @@ set -e
 
 HOST="/usr/share/blockade/type-info"		# Name/type url download link.
 
-# Use systemctl --list-timers to to show when the hosts file was last updated.
-LAST=$(systemctl list-timers --all | grep 'blockade' | awk -F' ' '{print $8,$9,$10}')
-if [ "${LAST}" == "" ] ; then
-	LAST="n/a"
-fi
-
-# Show the status of blockade.
+# Show the status of blockade and when last updated grabing the info from `systemctl status.`
 STATUS=$(systemctl status blockade-hosts-update.timer | awk -F' ' 'NR==3 {print $2,$3}')
 if [ "${STATUS}" == "" ] || [ "${STATUS}" == "inactive (dead)" ] ; then
 	STATUS="dead"
+fi
+
+LAST=$(systemctl status blockade-hosts-update.timer | awk -F' '  'NR==3 {print $5,$6,$7}')
+if [ "${LAST}" == "" ] ; then
+	LAST="n/a"
 fi
 
 DATE=$(date -R)					# Get the UTC date anytime this script is called,
@@ -263,8 +239,13 @@ DATE=$(date -R)					# Get the UTC date anytime this script is called,
 
 CONFIG="/usr/lib/blockade/blockade.conf"	# Configuration file, this is needed.
 
+# Don't let there be a missing config file and if need be revert back
+# to the default configuration.
+if [ ! -f ${CONFIG} ] ; then missing_config ; fi
+source  ${CONFIG}				# Source the configuration file.
+
 # File use if custom links are add.
-CUSTOM_LINKS="cat /lib/blockade/user-added-links"
+CUSTOM_LINKS="/lib/blockade/user-added-links"
 
 # Usage for blockade.
 USAGE="blockade ${VERSION} (hosts)
@@ -305,7 +286,7 @@ elif [ "${EUID}" -ne 1 ] ; then
 
 	while true ; do
 
-		if [ -f ${CONFIG} ] ; then source  ${CONFIG} ; else missing_config ; fi
+		if [ ! -f ${CONFIG} ] ; then missing_config ; fi
 
 
 		case "${1}" in

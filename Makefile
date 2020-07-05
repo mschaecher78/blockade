@@ -1,7 +1,7 @@
 # Define how to construct the Blockade bash script.
 RELEASE = 2
-LEVEL = 20
-SUBLEVEL = 7
+LEVEL = 24
+SUBLEVEL = 0
 
 # Set version code and name.
 export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
@@ -12,6 +12,7 @@ TMP = debian/$(NAME)
 DEBIAN = /DEBIAN
 SERVICE = /lib/systemd/system
 BLOCKADE = /usr/share/blockade
+MAN = /usr/share/man/man1
 DOC = /usr/share/doc/blockade
 LIB = /usr/lib/blockade
 APP = /usr/bin
@@ -25,4 +26,4 @@ clean:
 	rm -Rf debian
 
 install:
-	scripts/install
+	scripts/direct-install

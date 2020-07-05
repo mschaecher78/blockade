@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -e
+
+echo "installing:  ${APP}/blockade"		# Feed back is a good thing.
+if ! sed "246iVERSION=\"${VERSION}\"" scr/blockade > ${APP}/blockade ; then
+	echo "Error: failed to install ${APP}/blockade"
+	exit 1
+fi
+
+echo "installing: ${SERVICE}/blockade-hosts-update.timer
+installing: ${SERVICE}/blockade-hosts-update.service"
+if ! cp -f scr/blockade-hosts-update.* ${SERVICE}/ > /dev/null ; then
+	echo "Error: failed to install ${SERVICE}/blockade-hosts-update.timer"
+	echo "Error: failed to install ${SERVICE}/blockade-hosts-update.service"
+	exit 1
+else
+	echo "installing: ${BLOCKADE}/type-info"
+	if ! cp -f scr/doc/type-info ${BLOCKADE}/type-info ; then
+		echo "Error: failed to install ${BLOCKADE}/type-info"
+	fi
+
+	echo "installing: ${LIB}/blockade.conf"
+	if ! cp -f scr/blockade.conf ${LIB}/blockade.conf ; then
+		echo "Error: failed to install  ${LIB}/blockade.conf"
+	fi
+
+	cp -vf man/blockade.1 ${TMP}/${MAN}/blockade.1
+
+	if ! gzip -9 -vf ${TMP}/${MAN}/blockade.1 ; then
+		echo "Error" && exit 1
+	fi
+
+	# Copy and conpress changelog.
+	if ! cp -vf changelog copyright ${DOC}/ ; then
+		echo "Missing: ${DOC} && ${SERVICE}" && exit 1
+	else
+		if ! gzip -9 -vf ${DOC}/changelog ; then
+			echo "Error" && exit 1
+		fi
+	fi
+fi
+
+
+if which systemctl >/dev/null 2>&1 ; then
+	systemctl enable blockade-hosts-update.timer || true
+fi
