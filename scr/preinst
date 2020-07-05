@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+# If blockade is alread installed.
+if [ -f /usr/lib/blockade/blockade.conf ] ; then
+	echo "detected blockade.conf ..... backing up"
+	mv -f /usr/lib/blockade/blockade.conf /usr/lib/blockade/blockade.conf.old
+fi

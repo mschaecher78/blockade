@@ -2,6 +2,14 @@
 
 set -e
 
+
+
+# If blockade is alread installed.
+if [ -f /usr/lib/blockade/blockade.conf ] ; then
+	echo "detected blockade.conf ..... backing up"
+	mv -f ${LIB}/blockade.conf ${LIB}/blockade.conf.old
+fi
+
 echo "installing:  ${APP}/blockade"		# Feed back is a good thing.
 if ! sed "246iVERSION=\"${VERSION}\"" scr/blockade > ${APP}/blockade ; then
 	echo "Error: failed to install ${APP}/blockade"
@@ -35,12 +43,23 @@ else
 	if ! cp -vf changelog copyright ${DOC}/ ; then
 		echo "Missing: ${DOC} && ${SERVICE}" && exit 1
 	else
+
 		if ! gzip -9 -vf ${DOC}/changelog ; then
 			echo "Error" && exit 1
 		fi
+
 	fi
+
 fi
 
+echo "restoring configuration"
+mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
+
+echo "fixing premissions"
+chmod 0755 ${APP}/blockade
+chown -R root:root /usr/bin/blockade /usr/lib/blockade \
+	/lib/systemd/system/blockade-hosts-update.* \
+	/usr/share/doc/blockade
 
 if which systemctl >/dev/null 2>&1 ; then
 	systemctl enable blockade-hosts-update.timer || true

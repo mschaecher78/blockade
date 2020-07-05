@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # postinst script
 # see: dh_installdeb(1)
 
@@ -6,14 +6,17 @@ set -e
 
 case "$1" in
     configure)
+    	echo "restoring configuration"
+    	mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
     	echo "fixing premissions"
     	chown -R root:root /usr/bin/blockade /usr/lib/blockade \
     		/lib/systemd/system/blockade-hosts-update.* \
-    		/usr/doc/blockade
+    		/usr/share/doc/blockade
         if which systemctl >/dev/null 2>&1
         then
             systemctl enable blockade-hosts-update.timer || true
         fi
+
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
     ;;

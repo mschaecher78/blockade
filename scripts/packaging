@@ -4,8 +4,8 @@
 
 set -e
 
-mkdir -vp ${TMP}/${DEBIAN} ${TMP}/${SERVICE} ${TMP}/${APP} \
-	${TMP}/${DOC} ${TMP}/${BLOCKADE} ${TMP}/${LIB}
+mkdir -vp ${TMP}${DEBIAN} ${TMP}${SERVICE} ${TMP}${APP} \
+	${TMP}${DOC} ${TMP}${BLOCKADE} ${TMP}${LIB} ${TMP}${MAN}
 
 CHANGELOG=$(cat changelog)
 
@@ -33,32 +33,32 @@ cp -f debian/changelog changelog
 
 # Aviod using cp to copy the main script because the version needs
 # to be set.
-sed "246iVERSION=\"${VERSION}\"" scr/blockade > ${TMP}/${APP}/blockade
+sed "246iVERSION=\"${VERSION}\"" scr/blockade > ${TMP}${APP}/blockade
 
-if ! cp -vf scr/blockade-hosts-update.* ${TMP}/${SERVICE}/ ; then
+if ! cp -vf scr/blockade-hosts-update.* ${TMP}${SERVICE}/ ; then
 	echo "Error: missing" && exit 1
 else
-	cp -vf scr/doc/* ${TMP}/${BLOCKADE}/
-	cp -vf scr/blockade.conf ${TMP}/${LIB}/blockade.conf
-	cp -vf man/blockade.1 ${TMP}/${MAN}/blockade.1
+	cp -vf scr/doc/* ${TMP}${BLOCKADE}/
+	cp -vf scr/blockade.conf ${TMP}${LIB}/blockade.conf
+	cp -vf man/blockade.1 ${TMP}${MAN}/blockade.1
 
-	if ! gzip -9 -vf ${TMP}/${MAN}/blockade.1 ; then
+	if ! gzip -9 -vf ${TMP}${MAN}/blockade.1 ; then
 		echo "Error" && exit 1
 	fi
 
 	# Copy and conpress changelog.
-	if ! cp -vf debian/changelog copyright ${TMP}/${DOC}/ ; then
-		echo "Missing: ${TMP}/${DOC} && ${TMP}/${SERVICE}" && exit 1
+	if ! cp -vf debian/changelog copyright ${TMP}${DOC}/ ; then
+		echo "Missing: ${TMP}${DOC} && ${TMP}${SERVICE}" && exit 1
 	else
-		if ! gzip -9 -vf ${TMP}/${DOC}/changelog ; then
+		if ! gzip -9 -vf ${TMP}${DOC}/changelog ; then
 			echo "Error" && exit 1
 		fi
 	fi
 
-	if ! cp -vf scr/postinst ${TMP}/${DEBIAN}/postinst ; then
+	if ! cp -vf scr/postinst scr/preinst ${TMP}${DEBIAN}/ ; then
 		echo "Missing: installer" && exit 1
 	else
-		chmod 0755 ${TMP}/${DEBIAN}/postinst
+		chmod 0755 ${TMP}/${DEBIAN}/* ${TMP}${APP}/blockade
 	fi
 
 fi

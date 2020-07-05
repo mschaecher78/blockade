@@ -1,7 +1,7 @@
 # Define how to construct the Blockade bash script.
 RELEASE = 2
 LEVEL = 24
-SUBLEVEL = 0
+SUBLEVEL = 1
 
 # Set version code and name.
 export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
@@ -16,7 +16,7 @@ MAN = /usr/share/man/man1
 DOC = /usr/share/doc/blockade
 LIB = /usr/lib/blockade
 APP = /usr/bin
-export TMP DEBIAN SERVICE BLOCKADE DOC LIB APP
+export TMP DEBIAN SERVICE BLOCKADE DOC LIB APP MAN
 
 package:
 	make clean

@@ -1,3 +1,10 @@
+blockade-2.24.0 (2.24.0) ubuntu; urgency=medium
+
+  * Manpage add for better help info.
+  * deb package install pionted to the wrong directory.
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Sun, 05 Jul 2020 00:27:12 -0600
+
 blockade-2.20.7 (2.20.7) ubuntu; urgency=medium
 
   * Add option to edit /etc/hosts and clean up.
