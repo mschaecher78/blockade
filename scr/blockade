@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Blockade; a program that updates the hosts file automaticaly.
+# Blockade; a program that updates the hosts file automatically.
 # Copyright (C) 2020  Michael L. Schaecher
 
 # This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@ ${CONFIG} > /tmp/blockade.conf.tmp ; then
 
 	echo "setting update to ${WHEN}"
 	mv -f /tmp/blockade.conf.tmp ${CONFIG}
-	# Since blockade's configuration was rewritten the file's premissions
+	# Since blockade's configuration was rewritten the file's permissions
 	# need to be fixed.
 	chmod 0755 ${CONFIG}
 
@@ -98,7 +98,7 @@ else
 		echo "Error: unable to reload systemd daemons!"
 		exit 1
 	else
-		echo "Reload systemd deamons."
+		echo "Reload systemd daemons."
 	fi
 
 fi
@@ -107,19 +107,19 @@ fi
 
 function set_type () {
 
-# /usr/share/blockade/type-info is used for avialible hosts and to generate
+# /usr/share/blockade/type-info is used for available hosts and to generate
 # new blockade.conf file.
-read -p "List of avialible hosts configuration.
+read -p "List of available hosts configuration.
 
 $(cat ${HOST} | awk -F';' '{print $1,"\t"$2}')
 
-Choise option [ press enter to keep \"${NAME}\" ]: " CHOISE
+Choose option [ press enter to keep \"${NAME}\" ]: " CH00SE
 
-case ${CHOISE} in
+case ${CH00SE} in
 	[0-9]|10|11|12|13|14|15|16)
 
-		# Need to capture the selected choise and print into a tempary file.
-		cat ${HOST} | awk "NR==${CHOISE} {print}" > /tmp/blockade-type.txt
+		# Need to capture the selected choice and print into a temporary file.
+		cat ${HOST} | awk "NR==${CH00SE} {print}" > /tmp/blockade-type.txt
 
 		# Set variable for the new name.
 		GET_NAME=$(cat /tmp/blockade-type.txt | awk -F';' '{print $2}')
@@ -140,7 +140,7 @@ case ${CHOISE} in
 
 
 	;;
-	*) echo "'${CHOISE}' Unknow options!" && exit 1 ;;
+	*) echo "'${CHOOSE}' Unknown options!" && exit 1 ;;
 	"") echo "Doing nothing!" && exit 0 ;;
 esac
 
@@ -166,7 +166,7 @@ cat <<EOF > /etc/hosts
 # Type: ${NAME}
 #
 # This hosts file is updated and is sourced from Steven Black hosts
-# github page. If you come accross any links that you feel should be
+# github page. If you come across any links that you feel should be
 # add, feel free to contact me or Mr. Black on github.
 #
 # https://github.com/mschaecher78/blockade/issues
@@ -223,7 +223,7 @@ set -e
 
 HOST="/usr/share/blockade/type-info"		# Name/type url download link.
 
-# Show the status of blockade and when last updated grabing the info from `systemctl status.`
+# Show the status of blockade and when last updated, grabbing the info from `systemctl status.`
 STATUS=$(systemctl status blockade-hosts-update.timer | awk -F' ' 'NR==3 {print $2,$3}')
 if [ "${STATUS}" == "" ] || [ "${STATUS}" == "inactive (dead)" ] ; then
 	STATUS="dead"
@@ -249,13 +249,13 @@ CUSTOM_LINKS="/lib/blockade/user-added-links"
 
 # Usage for blockade.
 USAGE="blockade ${VERSION} (hosts)
-Useage = blockade [option]
+Usage = blockade [option]
 
     --edit			Manually edit /etc/hosts file.
     --update			Installs new hosts file based on what the has be set by the system
 				admin. This can be done manual.
     --interval=date		How offend to update (systemd required). See man page for details.
-    --type			Displays a list of avialible hosts file.
+    --type			Displays a list of available hosts file.
     --info			Display the hosts file type, download link and last time /etc/hosts
 				was update.
     --help			Show these quick tips.
@@ -301,7 +301,7 @@ elif [ "${EUID}" -ne 1 ] ; then
 
 				# Create a backup file so that when the hosts is
 				# updated then links that was add by the user doesn't
-				# have to be reenterd.
+				# have to be reenter.
 				#
 				# The update should be painless.
 				echo "${1}" >> /lib/blockade/user-added-links
