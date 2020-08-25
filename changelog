@@ -1,3 +1,10 @@
+blockade (2.32.0) ubuntu; urgency=medium
+
+  * Fixed man page refurring to nonexisting commands.
+  * Version bump
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Tue, 25 Aug 2020 14:31:04 -0600
+
 blockade-2.30.2 (2.30.2) ubuntu; urgency=medium
 
   * Fix some typo's and misspellings.

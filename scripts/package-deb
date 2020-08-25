@@ -17,7 +17,7 @@ if grep "* ${COMMIT}" changelog > /dev/null ; then
 	cp changelog debian/changelog
 else
 cat <<EOF > debian/changelog
-${NAME_VERSION} (${VERSION}) ubuntu; urgency=medium
+${NAME} (${VERSION}) ubuntu; urgency=medium
 
   * ${COMMIT}
 
@@ -61,7 +61,7 @@ fi
 
 # Generate a control file
 cat <<EOF > debian/control
-Source: ${NAME}-${VERSION}
+Source: ${NAME}
 Section: networking
 Priority: optional
 Maintainer: ${DEBFULLNAME} <${DEBEMAIL}>
