@@ -6,14 +6,13 @@ set -e
 
 case "$1" in
     configure)
-    	echo "restoring configuration"
-    	mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
-    	echo "fixing premissions"
-    	chown -R root:root /usr/bin/blockade /usr/lib/blockade \
-    		/lib/systemd/system/blockade-hosts-update.* \
-    		/usr/share/doc/blockade
-        if which systemctl >/dev/null 2>&1
-        then
+
+        if [ -f /usr/lib/blockade/blockade.conf.old ] ; then
+            echo "restoring configuration"
+    	    mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
+        fi
+
+        if which systemctl >/dev/null 2>&1 ; then
             systemctl enable blockade-hosts-update.timer || true
         fi
 

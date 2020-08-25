@@ -1,0 +1,97 @@
+#!/bin/bash
+
+set -e
+
+# Create that directories that are needed for the package
+mkdir -vp debian/${NAME}/${DEB} debian/${NAME}/${SER} debian/${NAME}/${BIN} debian/${NAME}/${DOC} \
+	debian/${NAME}/${DIR} debian/${NAME}/${LYB} debian/${NAME}/${MAN}
+
+# Main changelog
+CHANGELOG=$(cat changelog)
+
+COMMIT=$(cat .git/COMMIT_EDITMSG)
+
+# Make sure that the commit message is not duplicated in then
+# changelog.
+if grep "* ${COMMIT}" changelog > /dev/null ; then
+	cp changelog debian/changelog
+else
+cat <<EOF > debian/changelog
+${NAME_VERSION} (${VERSION}) ubuntu; urgency=medium
+
+  * ${COMMIT}
+
+ -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -R)
+
+${CHANGELOG}
+EOF
+fi
+
+cp -f debian/changelog changelog
+
+# Avoid using cp to copy the main script because the version needs
+# to be set.
+sed "246iVERSION=\"${VERSION}\"" scr/blockade > debian/${NAME}/${BIN}/${NAME}
+
+if ! cp -vf scr/blockade-hosts-update.* debian/${NAME}/${SER}/ ; then
+	echo "Error: missing" && exit 1
+else
+	cp -vf doc/* debian/${NAME}/${DOC}/
+	cp -vf scr/blockade.conf debian/${NAME}/${LYB}/blockade.conf
+	cp -vf man/blockade.1 debian/${NAME}/${MAN}/blockade.1
+
+	if ! gzip -9 -f debian/${NAME}/${MAN}/blockade.1 ; then
+		echo "Error" && exit 1
+	fi
+
+	# Copy and compress changelog.
+	if ! cp -vf debian/changelog copyright debian/${NAME}/${DOC}/ ; then
+		echo "Missing: debian/${DOC} && debian/${NAME}/${SERVICE}" && exit 1
+	else
+		if ! gzip -9 -f debian/${NAME}/${DOC}/changelog ; then
+			echo "Error" && exit 1
+		fi
+	fi
+
+	if ! cp -vf scr/postinst scr/preinst debian/${NAME}/${DEB}/ ; then
+		echo "Missing: installer" && exit 1
+	fi
+
+fi
+
+# Generate a control file
+cat <<EOF > debian/control
+Source: ${NAME}-${VERSION}
+Section: networking
+Priority: optional
+Maintainer: ${DEBFULLNAME} <${DEBEMAIL}>
+Build-Depends: cp, gzip, wget, dpkg
+Homepage: https://www.github.com/mschaecher78/blockade/
+
+Package:${NAME}
+Architecture: all
+Depends: wget, systemd
+Description: Update hosts
+ Using Steven Black's' github hosts project. This enables
+ the hosts to be used to manage security while surfing the web.
+EOF
+
+tree=$(pwd)
+
+cd debian/${NAME}
+
+find . -type f ! -path './DEBIAN/*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums
+
+cd ${tree}
+
+# Fix ownership and permissions
+chown -R root:root "debian/${NAME}"
+chmod -R go-w "debian/${NAME}"
+# in case we are in a restrictive umask environment like 0077
+chmod -R a+rX "debian/${NAME}"
+# Set permission for main script
+chmod a+x debian/${NAME}/${BIN}/${NAME}
+
+if dpkg-gencontrol -p${NAME} -P"debian/${NAME}" ; then
+	dpkg-deb --build debian/${NAME} ..
+fi

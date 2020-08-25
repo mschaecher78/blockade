@@ -1,3 +1,9 @@
+blockade-2.30.2 (2.30.2) ubuntu; urgency=medium
+
+  * Fix some typo's and misspellings.
+
+ -- Michael L. Schaecher <mschaecher78@gmail.com>  Sun, 23 Aug 2020 23:23:14 -0600
+
 blockade-2.24.0 (2.24.0) ubuntu; urgency=medium
 
   * Manpage add for better help info.

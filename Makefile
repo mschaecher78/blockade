@@ -1,26 +1,25 @@
 # Define how to construct the Blockade bash script.
 RELEASE = 2
-LEVEL = 24
-SUBLEVEL = 10
+LEVEL = 32
+SUBLEVEL = 0
 
 # Set version code and name.
 export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
+
 export NAME = blockade
-export NAME_VERSION = $(NAME)-$(VERSION)
 
-TMP = debian/$(NAME)
-DEBIAN = /DEBIAN
-SERVICE = /lib/systemd/system
-BLOCKADE = /usr/share/blockade
-MAN = /usr/share/man/man1
-DOC = /usr/share/doc/blockade
-LIB = /usr/lib/blockade
-APP = /usr/bin
-export TMP DEBIAN SERVICE BLOCKADE DOC LIB APP MAN
+DEB = DEBIAN
+SER = lib/systemd/system
+DIR = usr/share/$(NAME)
+MAN = usr/share/man/man1
+DOC = usr/share/doc/$(NAME)
+LYB = usr/lib/$(NAME)
+BIN = usr/bin
+export DEB SER DIR MAN DOC LYB BIN
 
-package:
+package-deb:
 	make clean
-	scripts/packaging
+	fakeroot scripts/package-deb
 
 clean:
 	rm -Rf debian
