@@ -15,7 +15,7 @@ fi
 
 # Make sure that the commit message is not duplicated in then
 # changelog.
-if grep "* ${COMMIT}" changelog > /dev/null ; then
+if grep "${COMMIT}" changelog > /dev/null ; then
 	cp changelog debian/changelog
 else
 cat <<EOF > debian/changelog
