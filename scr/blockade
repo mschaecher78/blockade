@@ -221,7 +221,7 @@ fi
 set -e
 
 
-HOST="/usr/share/blockade/type-info"		# Name/type url download link.
+HOST="/usr/share/doc/blockade/type-info"		# Name/type url download link.
 
 # Show the status of blockade and when last updated, grabbing the info from `systemctl status.`
 STATUS=$(systemctl status blockade-hosts-update.timer | awk -F' ' 'NR==3 {print $2,$3}')

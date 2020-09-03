@@ -1,5 +1,11 @@
 blockade (2.32.0) ubuntu; urgency=medium
 
+  * Some fixes.
+
+ --  <>  Thu, 03 Sep 2020 12:22:04 -0600
+
+blockade (2.32.0) ubuntu; urgency=medium
+
   * Fixed man page refurring to nonexisting commands.
   * Version bump
 
