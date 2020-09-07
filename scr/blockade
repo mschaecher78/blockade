@@ -251,14 +251,14 @@ CUSTOM_LINKS="/lib/blockade/user-added-links"
 USAGE="blockade ${VERSION} (hosts)
 Usage = blockade [option]
 
-    --edit			Manually edit /etc/hosts file.
+    --edit				Manually edit /etc/hosts file.
     --update			Installs new hosts file based on what the has be set by the system
-				admin. This can be done manual.
+						admin. This can be done manual.
     --interval=date		How offend to update (systemd required). See man page for details.
-    --type			Displays a list of available hosts file.
-    --info			Display the hosts file type, download link and last time /etc/hosts
-				was update.
-    --help			Show these quick tips.
+    --type				Displays a list of available hosts file.
+    --info				Display the hosts file type, download link and last time /etc/hosts
+						was update.
+    --help				Show these quick tips.
     --version			Displays program name and version.
 
 blockade homepage: <https://www.github.com/mschaecher78/blockade/>

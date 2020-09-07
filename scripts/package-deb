@@ -9,7 +9,7 @@ mkdir -vp debian/${NAME}/${DEB} debian/${NAME}/${SER} debian/${NAME}/${BIN} debi
 # Main changelog
 CHANGELOG=$(cat changelog)
 
-if [ -f .git/COMMIT_EDITMSG ]; then
+if [ -f .git/COMMIT_EDITMSG ] ; then
     COMMIT=$(cat .git/COMMIT_EDITMSG)
 fi
 
