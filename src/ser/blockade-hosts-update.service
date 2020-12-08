@@ -3,7 +3,7 @@ Description=Update your hosts file without having to worry
 
 [Timer]
 Unit=blockade-hosts-update.service
-OnCalendar=monthly
+OnCalendar=*-*-5/10 00:15
 RandomizedDelaySec=15m
 Persistent=true
 

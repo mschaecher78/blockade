@@ -1,0 +1,18 @@
+- available hosts configuration -
+
+unified
+fakenews
+gambling
+porn
+social
+fakenews-gambling
+fakenews-porn
+fakenews-social
+gambling-porn
+gambling-social
+porn-social
+fakenews-gambling-porn
+fakenews-gambling-social
+fakenews-porn-social
+gambling-porn-social
+fakenews-gambling-porn-social

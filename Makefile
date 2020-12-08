@@ -1,13 +1,12 @@
-# Define how to construct the Blockade bash script.
-RELEASE = 2
-LEVEL = 32
-SUBLEVEL = 0
+#!/bin/make -f
 
-# Set version code and name.
-export VERSION = $(RELEASE).$(LEVEL).$(SUBLEVEL)
+# Version numbering can be and most offend is ambiguous, so in order to keep things simple
+# use date/time to set version by running date command at build time.
+export version 	= `date +%y.%m.%d-%H%M`
 
-export NAME = blockade
+export name = blockade
 
+# Set general directory structure here instead of the the build scripts.
 DEB = DEBIAN
 SER = lib/systemd/system
 DIR = usr/share/$(NAME)
@@ -19,7 +18,7 @@ export DEB SER DIR MAN DOC LYB BIN
 
 package-deb:
 	make clean
-	fakeroot scripts/package-deb
+	fakeroot tools/make-deb
 
 clean:
 	rm -Rf debian
