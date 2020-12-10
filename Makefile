@@ -2,19 +2,19 @@
 
 # Version numbering can be and most offend is ambiguous, so in order to keep things simple
 # use date/time to set version by running date command at build time.
-export version 	= `date +%y.%m.%d-%H%M`
+export version 	= 20.12.10-1146
 
 export name = blockade
 
 # Set general directory structure here instead of the the build scripts.
-DEB = DEBIAN
-SER = lib/systemd/system
-DIR = usr/share/$(NAME)
-MAN = usr/share/man/man1
-DOC = usr/share/doc/$(NAME)
-LYB = usr/lib/$(NAME)
-BIN = usr/bin
-export DEB SER DIR MAN DOC LYB BIN
+deb = DEBIAN
+ser = lib/systemd/system
+fil = usr/share/$(name)
+man = usr/share/man/man1
+doc = usr/share/doc/$(name)
+lib = usr/lib/$(name)
+bin = usr/bin
+export deb ser fil man doc lib bin
 
 package-deb:
 	make clean
@@ -24,4 +24,4 @@ clean:
 	rm -Rf debian
 
 install:
-	scripts/direct-install
+	tools/direct-install

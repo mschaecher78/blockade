@@ -19,7 +19,6 @@
 set -e
 
 name="blockade"
-version="20.11.09-0422"			# Version code is date/time related.
 
 current_date=$(date -R)			# Call the date command every blockade
 					# is ran.
@@ -27,11 +26,11 @@ current_date=$(date -R)			# Call the date command every blockade
 service_timer="/lib/systemd/system/blockade-host-update.timer"
 service_pause_timer="/lib/systemd/system/blockade-hosts-pause-update.timer"
 
-hosts_links=$(cat data/doc/hosts-links.txt)
+hosts_links=$(cat data/doc/hosts-links)
 
 # Assume that there is no blockade.conf.
-if [ ! -f src/lib/blockade.conf ] ; then
-	echo "missing - src/lib/blockade.conf"
+if [ ! -f /usr/lib/blockade/blockade.conf ] ; then
+	echo "missing - /usr/lib/blockade/blockade.conf"
 	# If for some reason the config file is missing, then
 	# revert to the default.
 	export hosts_name="unified"
@@ -39,7 +38,7 @@ if [ ! -f src/lib/blockade.conf ] ; then
 	export update_interval="monthly"
 	export added_url=""
 else
-	source src/lib/blockade.conf
+	source /usr/lib/blockade/blockade.conf
 fi
 
 # Header for hosts file.
@@ -125,7 +124,12 @@ EOF
 hosts_name_list=$(cat <<EOF
 ${general_info}
 
-$(cat data/doc/hosts-list.md)
+$(cat data/doc/hosts-list)
+EOF
+)
+
+errors=$(cat <<EOF
+'blockade' - unknown command or option give!
 EOF
 )
 
@@ -153,7 +157,7 @@ EOF
 )
 
 # Show error if for some reason the config file could not be rebuilt.
-if ! echo "${build_conf}" > src/lib/blockade.conf 2> /dev/null ; then
+if ! echo "${build_conf}" > /usr/lib/blockade/blockade.conf ; then
 	echo "'blockade' - unable to rebuild config file!"
 	exit 1
 fi
@@ -324,7 +328,7 @@ while true ; do case "${1}" in
 			;;
 		esac
 
-		break
+		RebuildConfig && RefreshBlockade && break
 	;;
 	name)
 		shift 1

@@ -4,27 +4,22 @@
 
 set -e
 
-case "$1" in
-    configure)
+case "${1}" in
+	configure)
 
-        if [ -f /usr/lib/blockade/blockade.conf.old ] ; then
-            echo "restoring configuration"
-    	    mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
-        fi
+		if which systemctl >/dev/null 2>&1 ; then
+			systemctl enable blockade-hosts-update.timer || true
+		fi
 
-        if which systemctl >/dev/null 2>&1 ; then
-            systemctl enable blockade-hosts-update.timer || true
-        fi
-
-    ;;
-    abort-upgrade|abort-remove|abort-deconfigure)
-    ;;
-    triggered)
-    ;;
-    *)
-        echo "postinst called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+	;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+	triggered)
+	;;
+	*)
+		echo "postinst called with unknown argument ${1}" >&2
+		exit 1
+	;;
 esac
 
 # dh_installdeb will replace this with shell code automatically

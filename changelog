@@ -1,3 +1,9 @@
+blockade (20.12.08-2106) ubuntu; urgency=medium
+
+  * Complete rewrite of main scripts.
+
+ -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Tue, 08 Dec 2020 21:07:16 -0700
+
 blockade (2.32.0) ubuntu; urgency=medium
 
   * Fixed man page refurring to nonexisting commands.
