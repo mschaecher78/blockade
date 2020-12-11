@@ -1,11 +1,9 @@
 [Unit]
 Description=Update your hosts file without having to worry
 
-[Timer]
-Unit=blockade-hosts-update.service
-OnCalendar=*-*-5/10 00:15
-RandomizedDelaySec=15m
-Persistent=true
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/blockade refresh
 
 [Install]
-WantedBy=timers.target
+WantedBy=multi-user.target

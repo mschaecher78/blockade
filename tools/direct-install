@@ -2,5 +2,5 @@
 
 set -e
 
-mkdir -vp {/${fil},/${doc},/${lib},/${ser}}}
+mkdir -vp {/${fil},/${doc},/${lib},/${ser}}
 

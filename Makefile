@@ -2,7 +2,7 @@
 
 # Version numbering can be and most offend is ambiguous, so in order to keep things simple
 # use date/time to set version by running date command at build time.
-export version 	= 20.12.10-1146
+export version 	= 20.12.10-2005
 
 export name = blockade
 

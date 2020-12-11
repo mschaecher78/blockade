@@ -1,3 +1,9 @@
+blockade (20.12.10-1146) ubuntu; urgency=medium
+
+  * Fixed essues with setting refresh interval.
+
+ -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 11:49:35 -0700
+
 blockade (20.12.08-2106) ubuntu; urgency=medium
 
   * Complete rewrite of main scripts.

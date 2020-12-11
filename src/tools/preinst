@@ -20,14 +20,14 @@ case "${1}" in
 	configure|upgrade)
 
 		current=$(blockade --version | awk -F" " "{print $2}")
-		required="20.12.10"
+		required="20.12.10-0"
 
 		if which blockade ; then
 
 			if [ "${required}" = "${required}" ] ; then
-				echo "Greater than or equal to 20.12.10"
+				echo "Greater than or equal to 20.12.10-0"
 			else
-				echo "Less than 20.12.10"
+				echo "Less than 20.12.10-0"
 
 				if [ -f /usr/lib/blockade/blockade.conf ] ; then
 					echo "sourcing old config file"

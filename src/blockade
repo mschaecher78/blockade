@@ -23,7 +23,7 @@ name="blockade"
 current_date=$(date -R)			# Call the date command every blockade
 					# is ran.
 
-service_timer="/lib/systemd/system/blockade-host-update.timer"
+service_timer="/lib/systemd/system/blockade-hosts-update.timer"
 service_pause_timer="/lib/systemd/system/blockade-hosts-pause-update.timer"
 
 hosts_links=$(cat data/doc/hosts-links)
@@ -128,7 +128,7 @@ $(cat data/doc/hosts-list)
 EOF
 )
 
-errors=$(cat <<EOF
+errors_message=$(cat <<EOF
 'blockade' - unknown command or option give!
 EOF
 )
@@ -151,7 +151,6 @@ export build_conf=$(cat <<EOF
 
 export hosts_name="${hosts_name}"
 export raw_link="${raw_link}"
-export update_interval="${update_interval}"
 export added_url="${added_url}"
 EOF
 )
@@ -170,7 +169,7 @@ function RebuildTimer () {
 RebuildConfig
 
 # Rebuild the systemctl timer scripts.
-systemctl_timer=$(cat <<EOF >
+systemctl_timer=$(cat <<EOF
 [Unit]
 Description=Update your hosts file without having to worry
 
@@ -221,7 +220,7 @@ EOF
 
 # Only use the redirects websites not the hosts file header.
 if ! wget -O - -cq  ${raw_link} | awk 'NR < 40{next}1' | grep '0.0.0.0' > /tmp/hosts ; then
-	echo "${errors}" && exit 1
+	echo "${errors_message}" && exit 1
 else
 	# Remove the example.
 	tmp_hosts=$(cat /tmp/hosts | head -n -1) && rm -f /tmp/hosts
@@ -254,7 +253,7 @@ if systemctl restart NetworkManager.service ; then
 	fi
 
 else
-	echo "${errors}" && exit 1
+	echo "${errors_message}" && exit 1
 fi
 
 }
@@ -268,7 +267,7 @@ Description=Update your hosts file without having to worry
 [Timer]
 Unit=blockade-hosts-update.service
 OnCalendar=${pause_timer}
-RandomizedDelaySec=15m
+RandomizedDelaySec=15s
 Persistent=true
 
 [Install]
@@ -283,9 +282,8 @@ else
 	echo "${custom_hosts_header}" > /etc/hosts
 
 	if which systemctl >/dev/null 2>&1 ; then
-            systemctl start blockade-hosts-pause-update.timer || true
-	    systemctl daemon-reload
-        fi
+        	systemctl start blockade-hosts-pause-update.timer || true
+	fi
 
 fi
 
@@ -316,19 +314,20 @@ while true ; do case "${1}" in
 				if [[ "${1}" =~ ^(daily|weekly|monthly|yearly)$ ]] ; then
 					export update_interval="${1}"
 				else
-					echo "${errors}" && exit 1
+					echo "${errors_message}" && exit 1
 				fi
 
 			;;
 			-t)
+				shift 1
 				export update_interval="${1}"
 			;;
 			*)
-				echo "${errors}" && exit 1
+				echo "${errors_message}" && exit 1
 			;;
 		esac
 
-		RebuildConfig && RefreshBlockade && break
+		RebuildTimer && RefreshBlockade && break
 	;;
 	name)
 		shift 1
@@ -351,7 +350,7 @@ while true ; do case "${1}" in
 				export raw_link=$(echo "${hosts_links}" | grep "/alternates/${1}/hosts")
 
 				if [ ! "${raw_link}" ] ; then
-					echo "${errors}" && exit 1
+					echo "${errors_message}" && exit 1
 				fi
 
 			fi
@@ -387,7 +386,7 @@ while true ; do case "${1}" in
 			fi
 
 		else
-			echo "${errors}" && exit 1
+			echo "${errors_message}" && exit 1
 		fi
 
 		PauseBlockade && break
@@ -402,7 +401,7 @@ while true ; do case "${1}" in
 		echo "${general_info}" && break
 	;;
 	*|"")
-		echo "${errors}" && exit 1
+		echo "${errors_message}" && exit 1
 	;;
 esac done
 
