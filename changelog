@@ -1,8 +1,10 @@
 blockade (20.12.10-2005) ubuntu; urgency=medium
 
+  * Manage config when upgrading blockade version passed current.
   * Some more fixes.
+  * Update changelog.
 
- -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 20:07:20 -0700
+ -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 22:37:59 -0700
 
 blockade (20.12.10-1146) ubuntu; urgency=medium
 
