@@ -30,16 +30,16 @@ hosts_links=$(cat data/doc/hosts-links)
 
 # Assume that there is no blockade.conf.
 if [ ! -f /usr/lib/blockade/blockade.conf ] ; then
-	echo "missing - /usr/lib/blockade/blockade.conf"
-	# If for some reason the config file is missing, then
-	# revert to the default.
-	export hosts_name="unified"
-	export raw_link="http://sbc.io/hosts/hosts"
-	export update_interval="monthly"
-	export added_url=""
-else
-	source /usr/lib/blockade/blockade.conf
+	cat <<EOF > /usr/lib/blockade/blockade.conf
+# This config file was auto generator, do not edit directly.
+
+export hosts_name="unified"
+export raw_link="http://sbc.io/hosts/hosts"
+export added_url=""
+EOF
 fi
+
+source /usr/lib/blockade/blockade.conf
 
 # Header for hosts file.
 custom_hosts_header=$(cat <<EOF

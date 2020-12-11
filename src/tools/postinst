@@ -11,6 +11,13 @@ case "${1}" in
 			systemctl enable blockade-hosts-update.timer || true
 		fi
 
+		if [ -f /usr/lib/blockade/blockade.conf.old ] ; then
+			echo "restoring configuration"
+			mv -f /usr/lib/blockade/blockade.conf.old /usr/lib/blockade/blockade.conf
+		fi
+
+		rm -f /usr/lib/blockade/user-added-links
+
 	;;
 	abort-upgrade|abort-remove|abort-deconfigure)
 	;;

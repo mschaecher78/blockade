@@ -6,7 +6,7 @@ set -e
 
 function RebuildConfig () {
 
-cat <<EOF > /usr/lib/blockade/blockade.conf
+cat <<EOF > /usr/lib/blockade/blockade.conf.old
 # This config file was auto generator, do not edit directly.
 
 export hosts_name="${NAME}"
@@ -25,21 +25,21 @@ case "${1}" in
 		if which blockade ; then
 
 			if [ "${required}" = "${required}" ] ; then
-				echo "Greater than or equal to 20.12.10-0"
+				echo "backing up configuration"
+				mv -f /usr/lib/blockade/blockade.conf /usr/lib/blockade/blockade.conf.old
 			else
-				echo "Less than 20.12.10-0"
 
 				if [ -f /usr/lib/blockade/blockade.conf ] ; then
 					echo "sourcing old config file"
 					source /usr/lib/blockade/blockade.conf
+					export added_url=$(cat /usr/lib/blockade/user-added-links |
+						awk -F' ' '{print $2}')
+					RebuildConfig
 				fi
 
 			fi
 
 		fi
-
-		export added_url=$(cat /lib/blockade/user-added-links)
-		RebuildConfig
 
 	;;
 	abort-upgrade|abort-remove|abort-deconfigure)

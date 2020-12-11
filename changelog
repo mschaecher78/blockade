@@ -1,3 +1,9 @@
+blockade (20.12.10-2005) ubuntu; urgency=medium
+
+  * Some more fixes.
+
+ -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 20:07:20 -0700
+
 blockade (20.12.10-1146) ubuntu; urgency=medium
 
   * Fixed essues with setting refresh interval.
