@@ -133,4 +133,4 @@ If the time limit is after the next **blockade** refresh, then the pause timeout
 
 LICENSES
 ========
-Copyright (C) 2020 License GPL3: GNU GPL version 2 only. This program comes with no **WARRANTY**.
+Copyright (C) 2020 License GPL3: GNU GPL version 3 only. This program comes with no **WARRANTY**.

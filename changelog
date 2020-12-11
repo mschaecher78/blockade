@@ -3,6 +3,7 @@ blockade (20.12.10-2005) ubuntu; urgency=medium
   * Manage config when upgrading blockade version passed current.
   * Some more fixes.
   * Update changelog.
+  * Manpage updated to reflect GPL license change.
 
  -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 22:37:59 -0700
 
