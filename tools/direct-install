@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-mkdir -vp {/${fil},/${doc},/${lib},/${ser}}
-

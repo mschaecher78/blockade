@@ -2,7 +2,7 @@
 
 # Version numbering can be and most offend is ambiguous, so in order to keep things simple
 # use date/time to set version by running date command at build time.
-export version 	= 20.12.10-2005
+export version 	= 2020.12.11-2144
 
 export name = blockade
 
@@ -18,10 +18,14 @@ export deb ser fil man doc lib bin
 
 package-deb:
 	make clean
-	fakeroot tools/make-deb
+	fakeroot tools/packaging package
 
 clean:
-	rm -Rf debian
+	rm -Rf build
+
+build:
+	make clean
+	fakeroot tools/packaging build
 
 install:
-	tools/direct-install
+	tools/direct-install install

@@ -1,0 +1,124 @@
+#!/bin/bash
+
+set -e
+
+dir="build"
+
+errors=$(cat <<EOF
+unknown option!
+EOF
+)
+
+# Control file for deb packaging
+control=$(cat <<EOF
+Source: ${name}
+Section: networking
+Priority: optional
+Maintainer: ${DEBFULLNAME} <${DEBEMAIL}>
+Build-Depends: cp, gzip, wget, dpkg
+Homepage: https://www.github.com/mschaecher78/blockade/
+
+Package:${name}
+Architecture: all
+Depends: wget, systemd
+Description: Update hosts
+ Using Steven Black's' github hosts project. This enables
+ the hosts to be used to manage security while surfing the web.
+EOF
+)
+
+# Everything here is common for either manual install or package build.
+function BuildApp () {
+
+# Debian style changelog'
+changelog=$(cat changelog)
+
+# the ".git/COMMIT_EDITMSG" file to edit the changelog, but only do
+# if there is a new commit.
+if [ -f .git/COMMIT_EDITMSG ] ; then
+	last_commit=$(cat .git/COMMIT_EDITMSG)
+fi
+
+new_changelog=$(cat <<EOF
+${name} (${version}) ubuntu; urgency=medium
+
+  * ${last_commit}
+
+ -- ${DEBFULLNAME} <${DEBEMAIL}>  $(date -R)
+
+${changelog}
+EOF
+)
+
+if grep "${last_commit}" changelog > /dev/null ; then
+	cp changelog ${dir}/changelog
+else
+	echo "${new_changelog}" > ${dir}/changelog
+	cp -f ${dir}/changelog changelog
+fi
+
+# Avoid using cp to copy the main script because the version needs
+# to be set.
+sed "22iversion=\"${version}\"		# Version code is date/time related." src/blockade > \
+	${dir}/${name}/${bin}/${name}
+
+# Copy the systemctl services and general files.
+cp -vf src/ser/blockade-hosts-update.* ${dir}/${name}/${ser}/
+cp -vf data/doc/* ${dir}/${name}/${fil}/
+cp -vf COPYING ${dir}/${name}/${doc}/copyright
+cp -f ${dir}/changelog ${dir}/${name}/${doc}/changelog
+
+# Compass the changelog.
+if gzip -9 -f ${dir}/${name}/${doc}/changelog ; then
+	echo "${dir}/changelog > ${dir}/${name}/${doc}/changelog.gz"
+fi
+
+pandoc data/man/${name}.1.md -s -t man -o ${dir}/${name}/${man}/${name}.1
+if gzip -9 -f ${dir}/${name}/${man}/${name}.1 ; then
+	echo "${dir}/${name}/${man}/${name}.1 > ${dir}/${name}/${man}/${name}.1.gz "
+fi
+
+}
+
+
+case "${1}" in
+	build)
+		# Create the directory structure.
+		mkdir -pv ${dir}/${name}/{${fil},${man},${doc},${lib},${bin},${ser}}
+		BuildApp
+
+		rm -f ${dir}/changelog
+	;;
+	install)
+	;;
+	package)
+		# Create the directory structure.
+		mkdir -pv ${dir}/${name}/{${deb},${fil},${man},${doc},${lib},${bin},${ser}}
+
+		BuildApp
+
+		echo "${control}" > ${dir}/control
+
+		tree=$(pwd) && cd ${dir}/${name}
+		find . -type f ! -path './DEBIAN/*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums
+
+		cd ${tree} && cp -vf src/tools/* ${dir}/${name}/${deb}
+
+		# Fix ownership and permissions
+		chown -R root:root "${dir}/${name}"
+		chmod -R go-w "${dir}/${name}"
+		# in case we are in a restrictive umask environment like 0077
+		chmod -R a+rX "${dir}/${name}"
+		# Set permission for main script
+		chmod a+x ${dir}/${name}/${bin}/${name}
+
+		if dpkg-gencontrol -l"${dir}/changelog" -c"${dir}/control" \
+		   -p${name} -P"${dir}/${name}" -f"${dir}/files" ; then
+			dpkg-deb --build ${dir}/${name} ..
+		fi
+
+	;;
+	*)
+		echo "${errors}" && exit 1
+	;;
+esac

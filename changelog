@@ -4,6 +4,7 @@ blockade (20.12.10-2005) ubuntu; urgency=medium
   * Some more fixes.
   * Update changelog.
   * Manpage updated to reflect GPL license change.
+  * Edited README.md to reflect what the plan is for blockade.
 
  -- Michael L. Schaecher <MichaelSchaecher@myangrytech.com>  Thu, 10 Dec 2020 22:37:59 -0700
 

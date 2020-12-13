@@ -61,6 +61,7 @@ Features
 - [x] Hosts file now refreshes after hosts name is set or changed and when you add a website/s.
 - [ ] Service check to make sure that blockade is active.
 - [ ] Show **blockade** status with included info; **_hosts name_**, **_last updated_** & **_next update_** and **_paused tell_**.
+- [ ] Alway for removing of unified from hosts file to alway for access to add based streaming content like **_Hulu_** and some news sites that use adds to pay for service.
 
 Entering Arguments
 ==================
